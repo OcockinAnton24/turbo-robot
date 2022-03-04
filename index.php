@@ -13,6 +13,17 @@
         if (!empty($_POST)){
             if (file_get_contents('php://input')){
                 //Processing Telegram Bot
+                if ($data['callback_query']){
+                    //Processing Callback
+                    $callbdata = $data['callback_query'];
+                    $chatid = $callbdata["from"]["id"];
+                }else{
+                    if($msg == '/start'){
+                        sendMessage($chatid, "Здравствуйте, вас приветствует бот бесплатных книг flibusta\nЧтобы найти книги, просто напишите название книги или автора",$token);
+                    }else{
+                        sendMessage($chatid, $msg, $token);
+                    }
+                }
             }else{
                 echo '<h1>403 | Unauthorised access prohibited!</h1>';
             }
